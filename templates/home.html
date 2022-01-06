@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <h1>This is bot</h1>
+</head>
+<body>
+<p>
+    {% for msg in messages %}
+        {{ msg }}
+    {% endfor %}
+</p>
+<p>
+    <h2>Lets try it</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form %}
+        <input type="submit" value="Add data" name="add" href="/home/income">
+        {% endif %}
+    </form>
+<p>
+<p>
+    {% for income in inc %}
+        {{ income.name }}
+    {% endfor %}
+</p>
+<p>
+    {% block content %}
+    {%  endblock %}
+</p>
+</body>
+</html>
