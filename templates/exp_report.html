@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expenditures report</title>
+</head>
+<style>
+.exp_info {
+  border: 1px solid black;
+  border-collapse: collapse;
+    padding: 7px;
+}
+
+</style>
+<body>
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/home/inc_report">Income report</a></li>
+    </ul>
+{% if exp_data %}
+<table class="exp_info">
+    <caption>Information for expenditure</caption>
+
+    <tr class="exp_info">
+        <th class="exp_info">Category</th>
+        <th class="exp_info">Name</th>
+        <th class="exp_info">Value</th>
+        <th class="exp_info">Date</th>
+    </tr>
+    {% for item in exp_data %}
+        <tr class="exp_info">
+            <td class="exp_info">{{ item.category }}</td>
+            <td class="exp_info">{{ item.name }}</td>
+            <td class="exp_info">{{ item.value }}</td>
+            <td class="exp_info">{{ item.date_added }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<p>Total expenditures: {{ sum }}</p>
+<form method="get">
+    {% csrf_token %}
+    <table class="filtered_info">
+        <tr>
+            <td>Filter by: <input type="submit" name="filter" value="Date" >
+                <input type="submit" name="filter" value="Category" >
+                <input type="submit" name="filter" value="Name" >
+                <input type="submit" name="filter" value="Value" >
+            </td>
+
+        </tr>
+
+    </table>
+    <table>
+        <tr>
+            <td>Get the report for date: </td>
+            <td>{{ date_form.date_from }}</td>
+            <td>{{ date_form.date_to }}</td>
+            <td><input type="submit" name="period" value="Get report" ></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>Get the report by category: </td>
+            <td><input type="submit" name="rep_cat" value="All"></td>
+            {% for item in category %}
+                <td><input type="submit" name="rep_cat" value="{{ item }}"></td>
+            {% endfor %}
+
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>

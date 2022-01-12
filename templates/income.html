@@ -1,9 +1,22 @@
 {% extends 'home.html' %}
 {% block content %}
-<h1>Test</h1>
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/home/expenditure">Expenditure</a></li>
+    </ul>
 <form method="post">
     {% csrf_token %}
-    {{ inc_form.as_p }}
+    <p>Category: {{ inc_form.category }}</p>
+    <p>Categories suggestions:</p>
+    <table>
+    {% for item in inc_data%}
+    <tr><input type="submit" value='{{ item }}' name="list category"></tr>
+    {% endfor %}
+    </table>
+    <p>Name: {{ inc_form.name }}</p>
+    <p>Value: {{ inc_form.value }}</p>
+    <p>Date: {{ inc_form.date_added }}</p>
+    <p>Is it periodical?: {{ inc_form.is_periodical}}</p>
     <input type="submit" value="Save data">
 </form>
 {% endblock %}

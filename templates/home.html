@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <h1>This is bot</h1>
+    <h1>Financial bot</h1>
 </head>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 7px;
+
+}
+</style>
 <body>
 <p>
     {% for msg in messages %}
@@ -12,21 +20,57 @@
     {% endfor %}
 </p>
 <p>
-    <h2>Lets try it</h2>
 
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         {% if form %}
         <input type="submit" value="Add data" name="add" href="/home/income">
+            <input type="submit" value="Get report" name="report">
         {% endif %}
     </form>
 <p>
-<p>
-    {% for income in inc %}
-        {{ income.name }}
+{% if form%}
+<table>
+{% if inc %}
+    <caption>Information for income</caption>
+
+    <tr>
+        <th>Category</th><th>Name</th><th>Value</th><th>Date</th><th></th>
+    </tr>
+    {% for item in inc %}
+        <tr>
+
+            <td>{{ item.category }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.value }}</td>
+            <td>{{ item.date_added }}</td>
+            <td><a href="/home/inc/{{ item.name }}/{{ item.category }}/{{ item.date_added.isoformat }}">Delete record</a></td>
+
+        </tr>
     {% endfor %}
-</p>
+    {% endif %}
+</table>
+
+<p></p>
+<table>
+    {% if exp %}
+    <caption>Information for expenditures</caption>
+    <tr>
+        <th>Category</th><th>Name</th><th>Value</th><th>Date</th>
+    </tr>
+    {% for item in exp %}
+        <tr>
+            <td>{{ item.category }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.value }}</td>
+            <td>{{ item.date_added }}</td>
+            <td><a href="/home/exp/{{ item.name }}/{{ item.category }}/{{ item.date_added.isoformat }}">Delete record</a></td>
+        </tr>
+    {% endfor %}
+{% endif %}
+</table>
+{% endif %}
 <p>
     {% block content %}
     {%  endblock %}

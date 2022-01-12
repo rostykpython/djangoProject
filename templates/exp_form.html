@@ -1,8 +1,22 @@
 {% extends 'home.html' %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ exp_form.as_p }}
-    <input type="submit" value="Save data">
-</form>
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/home/income">Income</a></li>
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Category: {{ exp_form.category }}</p>
+        <p>Categories suggestions:</p>
+        <table>
+        {% for item in exp_data%}
+        <tr><input type="submit" value='{{ item }}' name="list category"></tr>
+        {% endfor %}
+        </table>
+        <p>Name: {{ exp_form.name }}</p>
+        <p>Value: {{ exp_form.value }}</p>
+        <p>Date: {{ exp_form.date_added }}</p>
+        <input type="submit" value="Save data">
+    </form>
 {% endblock %}
